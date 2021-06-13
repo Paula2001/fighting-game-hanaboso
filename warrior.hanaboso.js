@@ -1,9 +1,17 @@
-class Warrior {
+const Helpers = require('./helpers');
+
+module.exports = class Warrior {
   constructor(attack, defense ,name) {
     this._lives = 100;
+    this._initLivesValue = 100;
     this._name = name;
     this._attack = attack;
     this._defense = defense;
+    this._usedBerserkrMode = false;
+  }
+
+  getName(){
+    return this._name;
   }
 
   getLives() {
@@ -18,36 +26,31 @@ class Warrior {
     return this._defense;
   }
 
-  setWarriorLive(livePoints){
-    this._lives = livePoints;
-  }
-
   receiveDamage(damage) {
     this._lives -= damage;
   }
 
   renderInfo() {
-    console.log(`Lives: ${this.lives}`);
-    console.log(`Attack: ${this.attack}`);
-    console.log(`Defense: ${this.defense}`);
+    console.log(`Name : ${this._name}`);
+    console.log(`Lives : ${this._lives}`);
+    console.log(`Attack : ${this._attack}`);
+    console.log(`Defense : ${this._defense}`);
   }
 
-  doAttack(defender) {
-    // not implemented yet
+  doAttack() {
+    let diceRoll = Helpers.getRandomInt(1,6);
+    if(this.isInBerserkrMode() && !this._usedBerserkrMode){
+      console.log(`${this._name} used berserkr mode`)
+      diceRoll *= 3 ;
+      this._usedBerserkrMode = true;
+    }
+    return this._attack + diceRoll;
   }
+
+  isInBerserkrMode(){
+    const halfHealth = this._initLivesValue / 2;
+    return halfHealth > this._lives;
+  }
+
 
 }
-
-/*
-// Example of possible usage after implementation
-const warrior1 = new Warrior('Chuck Norris', 40, 10)
-warrior1.renderInfo();
-
-console.log('VS.');
-
-const warrior2 = new Warrior('Rambo', 40, 10)
-warrior2.renderInfo();
-
-const arena = new Arena();
-arena.match(warrior1, warrior2, 5);
-*/

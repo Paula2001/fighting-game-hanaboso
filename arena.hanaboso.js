@@ -1,18 +1,37 @@
+const Match = require('./match.hanaboso');
+
 module.exports = class Arena {
-  constructor(warriorOne, warriorTwo ,arenaName) {
-    this._warriorOne = warriorOne;
-    this._warriorTwo = warriorTwo;
-    this._arenaName = arenaName;
-    this._round = 0;
+
+  constructor(arenaName) {
+      this._matches = [];
+      this._arenaName = arenaName;
   }
 
-  match(){
-    return this._round;
+  startNewMatch(WarriorOne ,WarriorTwo ,numberOfRounds = 5){
+      const match = new Match(WarriorOne,WarriorTwo ,numberOfRounds);
+      this._matches.push(match);
+      return match ;
   }
 
-  getResults(){
-    console.log("this is a test");
-    //todo : Who win , The score of both , the time of the battle
+  playMatch(match, numberOfRounds){
+      for (let i = 1; i <= numberOfRounds; i++) {
+          let attackTurn = match.attackTurn();
+          let AttackingWarrior = match.getAttackingWarrior(attackTurn);
+          let DefenderWarrior = match.getDefenderWarrior(attackTurn);
+          let turnSummary = match.turnAttack(AttackingWarrior ,DefenderWarrior);
+          match.setLastAttachTurn(attackTurn);
+          match.incrementRoundByOne();
+          match.printMatchUpdates(AttackingWarrior , DefenderWarrior , turnSummary)
+          if(match.checkIfMatchEnded(DefenderWarrior)){
+              break;
+          }
+      }
+      return match.whoWonMatch();
+  }
+
+
+  getArenaName(){
+    return this._arenaName;
   }
 
 }
