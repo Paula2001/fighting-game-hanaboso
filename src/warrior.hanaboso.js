@@ -1,4 +1,4 @@
-const Helpers = require('./helpers');
+const Helpers = require('../helpers');
 
 module.exports = class Warrior {
   constructor(attack, defense ,name) {
@@ -40,7 +40,7 @@ module.exports = class Warrior {
   doAttack() {
     let diceRoll = Helpers.getRandomInt(1,6);
     if(this.isInBerserkrMode() && !this._usedBerserkrMode){
-      console.log(`${this._name} used berserkr mode`)
+      console.log(`${this._name} is going to use berserkr mode`);
       diceRoll *= 3 ;
       this._usedBerserkrMode = true;
     }

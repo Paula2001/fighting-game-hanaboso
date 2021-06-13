@@ -1,4 +1,4 @@
-const Helpers = require('./helpers');
+const Helpers = require('../helpers');
 
 module.exports = class Match {
   constructor(warriorOne, warriorTwo ,maxNumberOfRounds) {
@@ -8,6 +8,10 @@ module.exports = class Match {
     this._round = 1;
     this._maxNumberOfRounds = maxNumberOfRounds;
   }
+
+  getRound(){
+    return this._round;
+  };
 
   attackTurn(){
     switch (this._lastAttackTurn) {
@@ -37,7 +41,7 @@ module.exports = class Match {
   }
 
   incrementRoundByOne(){
-      this._round = this._round++;
+      this._round = ++this._round;
   }
 
   whoWonMatch(){
@@ -62,7 +66,6 @@ module.exports = class Match {
   }
 
   printMatchUpdates(AttackingWarrior ,DefenderWarrior ,turnSummary){
-    console.log('\n');
     console.log(`${AttackingWarrior._name} attacked with ${turnSummary.attackingPoints} points.`)
     console.log(`${DefenderWarrior._name} has ${DefenderWarrior._lives} HP left.`)
     console.log(`And finally damage dealt is ${turnSummary.damageDealt}` ,'\n')

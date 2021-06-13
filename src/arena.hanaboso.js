@@ -15,6 +15,7 @@ module.exports = class Arena {
 
   playMatch(match, numberOfRounds){
       for (let i = 1; i <= numberOfRounds; i++) {
+          console.log(`This is Round (${match.getRound()})` , '\n');
           let attackTurn = match.attackTurn();
           let AttackingWarrior = match.getAttackingWarrior(attackTurn);
           let DefenderWarrior = match.getDefenderWarrior(attackTurn);

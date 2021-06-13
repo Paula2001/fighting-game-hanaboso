@@ -1,10 +1,10 @@
 const prompt = require('prompt');
-const Arena = require("./arena.hanaboso");
-const Warrior = require("./warrior.hanaboso");
+const Arena = require("./src/arena.hanaboso");
+const Warrior = require("./src/warrior.hanaboso");
 let isFirstGame = true;
 prompt.start();
 
-const startNewGame = (arena = null)=> {
+const startNewGame = ()=> {
     prompt.get(['WarriorFirstName', 'WarriorSecondName' ,'ArenaName'], function (err, result) {
         if (err) return 1;
 
@@ -21,7 +21,7 @@ const startNewGame = (arena = null)=> {
         prompt.getInput('numberOfRounds',function (err ,numberOfRounds) {
             const match = arena.startNewMatch(warrior1, warrior2, numberOfRounds);
             const results = arena.playMatch(match ,numberOfRounds);
-            console.log(results);
+            console.log(`The winner is ${results} `);
         });
 
 
